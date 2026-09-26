@@ -1,0 +1,58 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    overscroll-behavior-y: none;
+  }
+  
+  body {
+    @apply bg-gray-50 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100 text-base leading-normal md:text-lg md:leading-relaxed font-sans;
+    padding-top: env(safe-area-inset-top);
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    /* Bottom padding handled in AppShell to avoid blank space under bottom nav */
+  }
+
+  h1 {
+    @apply text-2xl leading-snug md:text-4xl md:leading-tight font-display font-bold md:tracking-tight;
+  }
+  
+  h2 {
+    @apply text-xl leading-snug md:text-3xl md:leading-tight font-display font-bold;
+  }
+  
+  h3 {
+    @apply text-lg leading-snug md:text-2xl md:leading-snug font-display font-bold;
+  }
+  
+  input, textarea, select {
+    @apply font-sans;
+  }
+
+  /* Custom scrollbar for desktop, hidden on mobile */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gray-300 dark:bg-gray-700 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gray-400 dark:bg-gray-600;
+  }
+}
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}

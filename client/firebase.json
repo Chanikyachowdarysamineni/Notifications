@@ -1,0 +1,17 @@
+{
+  "hosting": {
+    "site": "cse-hub-bd655-8fb6f",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}
