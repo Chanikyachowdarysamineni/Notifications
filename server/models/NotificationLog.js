@@ -30,4 +30,6 @@ const notificationLogSchema = new mongoose.Schema({
   is_read: { type: Boolean, default: false },
 }, { timestamps: true });
 
+notificationLogSchema.index({ recipient: 1, created_at: -1 });
+
 module.exports = mongoose.model('NotificationLog', notificationLogSchema);

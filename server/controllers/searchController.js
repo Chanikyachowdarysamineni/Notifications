@@ -2,10 +2,15 @@ const User = require('../models/User');
 
 const searchUsers = async (req, res) => {
   try {
-    const { q } = req.query;
-    if (!q || q.length < 2) {
-      return res.status(200).json([]);
+    const Joi = require('joi');
+    const searchSchema = Joi.object({
+      q: Joi.string().min(2).max(100).required(),
+    });
+    const { error, value } = searchSchema.validate(req.query);
+    if (error) {
+      return res.status(400).json({ message: 'Invalid query parameter' });
     }
+    const { q } = value;
 
     const regex = new RegExp(q, 'i');
 

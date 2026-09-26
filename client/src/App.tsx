@@ -63,7 +63,7 @@ function App() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
+      <Router basename="/csebro">
         <Routes>
           {/* Public Route */}
           <Route 

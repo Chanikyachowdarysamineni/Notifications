@@ -54,11 +54,16 @@ const issueTokenAndCookie = async (res, user, req) => {
 // @route POST /api/auth/login
 const login = async (req, res, next) => {
   try {
-    const { identifier, password } = req.body;
-
-    if (!identifier || !password) {
-      return res.status(400).json({ message: 'Identifier and password are required' });
+    const Joi = require('joi');
+    const loginSchema = Joi.object({
+      identifier: Joi.string().required(),
+      password: Joi.string().required(),
+    });
+    const { error, value } = loginSchema.validate(req.body);
+    if (error) {
+      return res.status(400).json({ message: 'Invalid request payload' });
     }
+    const { identifier, password } = value;
 
     const cleanIdentifier = identifier.trim();
     // Determine if identifier is an email or reg_no

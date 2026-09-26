@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/csebro/',
   server: {
     host: true,
     proxy: {
@@ -47,7 +48,8 @@ export default defineConfig({
         background_color: '#ffffff',
         display: 'standalone',
         orientation: 'portrait-primary',
-        start_url: '/dashboard',
+        scope: '/csebro/',
+        start_url: '/csebro/dashboard',
         icons: [
           {
             src: '/icons/icon-192x192.png',

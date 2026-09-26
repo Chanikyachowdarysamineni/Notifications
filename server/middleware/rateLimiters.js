@@ -1,12 +1,9 @@
 const rateLimit = require('express-rate-limit');
 
-// Placeholder for future Redis integration.
-// To use Redis:
-// const { RedisStore } = require('rate-limit-redis');
-// const Redis = require('ioredis');
-// const redisClient = new Redis(process.env.REDIS_URL);
-// const store = new RedisStore({ sendCommand: (...args) => redisClient.call(...args) });
-const store = undefined; // Uses built-in MemoryStore by default
+const { RedisStore } = require('rate-limit-redis');
+const Redis = require('ioredis');
+const redisClient = new Redis(process.env.REDIS_URL || 'redis://127.0.0.1:6379');
+const store = new RedisStore({ sendCommand: (...args) => redisClient.call(...args) });
 
 // Custom handler for returning 429 errors in JSON format
 const handler = (req, res, next, options) => {

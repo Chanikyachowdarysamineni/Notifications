@@ -3,7 +3,7 @@ import useAuthStore from '../store/authStore';
 
 const api = axios.create({
   // Use environment variable with fallback to prevent production crashes
-  baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
+  baseURL: import.meta.env.VITE_API_BASE_URL || '/csebro/api',
   withCredentials: true, // Send HTTP-only cookies (JWT) with every request
   timeout: 15000, // 15 seconds timeout to prevent hanging requests
 });
@@ -24,7 +24,7 @@ api.interceptors.response.use(
         try {
           // Attempt to refresh the access token using the httpOnly refresh token cookie
           await axios.post(
-            (import.meta.env.VITE_API_BASE_URL || '/api') + '/auth/refresh',
+            (import.meta.env.VITE_API_BASE_URL || '/csebro/api') + '/auth/refresh',
             {},
             { withCredentials: true }
           );

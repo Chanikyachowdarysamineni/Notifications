@@ -4,6 +4,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
 
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
@@ -40,6 +41,7 @@ app.use(helmet({
   },
   crossOriginResourcePolicy: { policy: "same-site" },
   referrerPolicy: { policy: "strict-origin-when-cross-origin" },
+  hsts: { maxAge: 31536000, includeSubDomains: true, preload: true },
 }));
 app.disable('x-powered-by'); // extra precaution
 
@@ -61,19 +63,12 @@ app.use((req, res, next) => {
   next();
 });
 
-// Security: Enforce CORS to trust only the frontend URL from environment
-const allowedOrigins = [process.env.FRONTEND_URL, 'http://localhost:5173', 'http://127.0.0.1:5173'];
 app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin) || origin.startsWith('http://192.168.') || origin.startsWith('http://10.')) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: ['http://160.187.169.41', 'https://<future-domain>', 'http://localhost:5173', 'http://127.0.0.1:5173'],
   credentials: true
 }));
 app.use(express.json());
+app.use(mongoSanitize());
 app.use(cookieParser());
 
 const initCronJobs = require('./cron/index');
